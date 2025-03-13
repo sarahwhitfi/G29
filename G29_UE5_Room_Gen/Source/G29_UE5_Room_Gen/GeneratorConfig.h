@@ -27,6 +27,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int numRooms;
 
-	void ParseConfigFile(FString fPath, int &parsedNumRooms);
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		float minScale;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		float maxScale;
+
+	void ParseConfigFile(FString fPath, int &parsedNumRooms, float &parsedMinScale, float &parsedMaxScale);
 		
 };

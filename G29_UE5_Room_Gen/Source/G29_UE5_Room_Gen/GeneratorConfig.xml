@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<config>
+	<NumRooms>4</NumRooms>
+	<MinScale>5.0</MinScale>
+	<MaxScale>5.0</MaxScale>
+</config>
