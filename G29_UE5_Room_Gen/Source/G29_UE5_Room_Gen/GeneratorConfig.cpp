@@ -16,16 +16,6 @@ UGeneratorConfig::UGeneratorConfig()
 	minScale = 0.f;
 	maxScale = 0.f;
 	
-	// get path to config file and call parser
-	// XML File should have name "GeneratorConfig.xml" and be located in games source directory (same folder as cpp classes)
-	FString gameSourcePath = FPaths::GameSourceDir();
-	FString configPath = FPaths::Combine(gameSourcePath, TEXT("GeneratorConfig.xml"));
-	
-	ParseConfigFile(configPath, numRooms, minScale, maxScale);
-
-	if (numRooms == 0) { UE_LOG(LogClass, Error, TEXT("numRooms value is still zero after parsing config file")) }
-	if (minScale == 0.f) { UE_LOG(LogClass, Error, TEXT("minScale value is still zero after parsing config file")) }
-	if (maxScale == 0.f) { UE_LOG(LogClass, Error, TEXT("maxScale value is still zero after parsing config file")) }
 }
 
 
@@ -34,7 +24,16 @@ void UGeneratorConfig::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
+	// get path to config file and call parser
+	// XML File should have name "GeneratorConfig.xml" and be located in games source directory (same folder as cpp classes)
+	FString gameSourcePath = FPaths::GameSourceDir();
+	FString configPath = FPaths::Combine(gameSourcePath, TEXT("G29_UE5_Room_Gen/GeneratorConfig.xml"));
+
+	ParseConfigFile(configPath, numRooms, minScale, maxScale);
+
+	if (numRooms == 0) { UE_LOG(LogClass, Error, TEXT("numRooms value is still zero after parsing config file")) }
+	if (minScale == 0.f) { UE_LOG(LogClass, Error, TEXT("minScale value is still zero after parsing config file")) }
+	if (maxScale == 0.f) { UE_LOG(LogClass, Error, TEXT("maxScale value is still zero after parsing config file")) }
 }
 
 
@@ -75,6 +74,7 @@ void UGeneratorConfig::ParseConfigFile(FString fPath, int &parsedNumRooms, float
 			}
 
 			parsedNumRooms = conversion;
+			UE_LOG(LogClass, Display, TEXT("HERE IS THE NUMBER OF ROOMS FROM PARSER: %i"), conversion);
 		}
 
 		// get and convert MinScale to float
