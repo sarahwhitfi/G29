@@ -3,5 +3,5 @@
 <config>
 	<NumRooms>10</NumRooms>
 	<MinScale>1.0</MinScale>
-	<MaxScale>3.0</MaxScale>
+	<MaxScale>2.0</MaxScale>
 </config>
