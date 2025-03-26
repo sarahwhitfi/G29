@@ -34,7 +34,7 @@ public:
 		float maxScale;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		int seed;
+		int configSeed;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int minNumPictures;

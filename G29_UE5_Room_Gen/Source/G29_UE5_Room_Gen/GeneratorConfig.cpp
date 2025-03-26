@@ -15,7 +15,7 @@ UGeneratorConfig::UGeneratorConfig()
 	// initialize values as zero
 	numRooms = 0;
 	minScale, maxScale = 0.f;
-	seed = 0;
+	configSeed = 0;
 	minNumPictures, maxNumPictures = 0;
 	
 }
@@ -36,7 +36,7 @@ void UGeneratorConfig::BeginPlay()
 	if (numRooms == 0) { UE_LOG(LogClass, Error, TEXT("numRooms value is still zero after parsing config file, valid value is required")) }
 	if (minScale == 0.f) { UE_LOG(LogClass, Error, TEXT("minScale value is still zero after parsing config file, valid value is required")) }
 	if (maxScale == 0.f) { UE_LOG(LogClass, Error, TEXT("maxScale value is still zero after parsing config file, valid value is required")) }
-	if (seed == 0) { UE_LOG(LogClass, Warning, TEXT("seed value is still zero after parsing config file, seed will be randomized")) }
+	if (configSeed == 0) { UE_LOG(LogClass, Warning, TEXT("seed value is still zero after parsing config file, seed will be randomized")) }
 	if (minNumPictures == 0) { UE_LOG(LogClass, Warning, TEXT("minNumPictures is still zero after parsing config file")) }
 	if (maxNumPictures == 0) { UE_LOG(LogClass, Warning, TEXT("maxNumPictures is still zero after parsing config file")) }
 }
@@ -118,7 +118,7 @@ void UGeneratorConfig::ParseConfigFile(FString fPath)
 				continue;
 			}
 
-			seed = conversion;
+			configSeed = conversion;
 			UE_LOG(LogClass, Log, TEXT("Generator seed from parser: %i"), conversion);
 		}
 
