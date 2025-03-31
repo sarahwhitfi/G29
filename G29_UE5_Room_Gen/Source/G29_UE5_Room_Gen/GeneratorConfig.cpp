@@ -12,9 +12,11 @@ UGeneratorConfig::UGeneratorConfig()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
 
+	// initialize values as zero
 	numRooms = 0;
-	minScale = 0.f;
-	maxScale = 0.f;
+	minScale, maxScale = 0.f;
+	configSeed = 0;
+	minNumPictures, maxNumPictures = 0;
 	
 }
 
@@ -29,11 +31,14 @@ void UGeneratorConfig::BeginPlay()
 	FString gameSourcePath = FPaths::GameSourceDir();
 	FString configPath = FPaths::Combine(gameSourcePath, TEXT("G29_UE5_Room_Gen/GeneratorConfig.xml"));
 
-	ParseConfigFile(configPath, numRooms, minScale, maxScale);
+	ParseConfigFile(configPath);
 
-	if (numRooms == 0) { UE_LOG(LogClass, Error, TEXT("numRooms value is still zero after parsing config file")) }
-	if (minScale == 0.f) { UE_LOG(LogClass, Error, TEXT("minScale value is still zero after parsing config file")) }
-	if (maxScale == 0.f) { UE_LOG(LogClass, Error, TEXT("maxScale value is still zero after parsing config file")) }
+	if (numRooms == 0) { UE_LOG(LogClass, Error, TEXT("numRooms value is still zero after parsing config file, valid value is required")) }
+	if (minScale == 0.f) { UE_LOG(LogClass, Error, TEXT("minScale value is still zero after parsing config file, valid value is required")) }
+	if (maxScale == 0.f) { UE_LOG(LogClass, Error, TEXT("maxScale value is still zero after parsing config file, valid value is required")) }
+	if (configSeed == 0) { UE_LOG(LogClass, Warning, TEXT("seed value is still zero after parsing config file, seed will be randomized")) }
+	if (minNumPictures == 0) { UE_LOG(LogClass, Warning, TEXT("minNumPictures is still zero after parsing config file")) }
+	if (maxNumPictures == 0) { UE_LOG(LogClass, Warning, TEXT("maxNumPictures is still zero after parsing config file")) }
 }
 
 
@@ -46,7 +51,7 @@ void UGeneratorConfig::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 }
 
 // parses through config file and gets number of rooms to be generated, minimum and maximum scale for room sizes (X and Y axis)
-void UGeneratorConfig::ParseConfigFile(FString fPath, int &parsedNumRooms, float &parsedMinScale, float &parsedMaxScale)
+void UGeneratorConfig::ParseConfigFile(FString fPath)
 {
 	FXmlFile* configFile = new FXmlFile(fPath);
 	if (!configFile->IsValid()) {
@@ -73,7 +78,7 @@ void UGeneratorConfig::ParseConfigFile(FString fPath, int &parsedNumRooms, float
 				continue;
 			}
 
-			parsedNumRooms = conversion;
+			numRooms = conversion;
 			UE_LOG(LogClass, Display, TEXT("HERE IS THE NUMBER OF ROOMS FROM PARSER: %i"), conversion);
 		}
 
@@ -87,7 +92,7 @@ void UGeneratorConfig::ParseConfigFile(FString fPath, int &parsedNumRooms, float
 				continue;
 			}
 
-			parsedMinScale = conversion;
+			minScale = conversion;
 		}
 
 		// get and convert MaxScale to float
@@ -100,7 +105,47 @@ void UGeneratorConfig::ParseConfigFile(FString fPath, int &parsedNumRooms, float
 				continue;
 			}
 
-			parsedMaxScale = conversion;
+			maxScale = conversion;
+		}
+
+		// get and convert seed to int
+		if (currentTag == "Seed") {
+			int conversion = FCString::Atoi(*nodeStr);
+
+			// if conversion fails, the value will be zero. The default value is also zero 
+			if (conversion == 0) {
+				UE_LOG(LogClass, Warning, TEXT("Seed is set or defaulted to zero"));
+				continue;
+			}
+
+			configSeed = conversion;
+			UE_LOG(LogClass, Log, TEXT("Generator seed from parser: %i"), conversion);
+		}
+
+		// get and convert minNumPictures to int
+		if (currentTag == "MinNumPictures") {
+			int conversion = FCString::Atoi(*nodeStr);
+
+			// if conversion fails, the value will be zero. The default value is also zero 
+			if (conversion == 0) {
+				UE_LOG(LogClass, Warning, TEXT("minNumPictures is set or defaulted to zero"));
+				continue;
+			}
+
+			minNumPictures = conversion;
+		}
+
+		// get and convert maxNumPictures to int
+		if (currentTag == "MaxNumPictures") {
+			int conversion = FCString::Atoi(*nodeStr);
+
+			// if conversion fails, the value will be zero. The default value is also zero 
+			if (conversion == 0) {
+				UE_LOG(LogClass, Warning, TEXT("maxNumPictures is set or defaulted to zero"));
+				continue;
+			}
+
+			maxNumPictures = conversion;
 		}
 	}
 
