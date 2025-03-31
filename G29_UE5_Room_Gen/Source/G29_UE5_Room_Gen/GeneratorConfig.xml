@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <config>
-	<Seed>0</Seed>
 	<NumRooms>10</NumRooms>
 	<MinScale>1.0</MinScale>
-	<MaxScale>2.0</MaxScale>
-	<MinNumPictures>2</MinNumPictures>
-	<MaxNumPictures>10</MaxNumPictures>
+	<MaxScale>3.0</MaxScale>
 </config>

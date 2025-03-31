@@ -33,15 +33,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float maxScale;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		int configSeed;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		int minNumPictures;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		int maxNumPictures;
-
-	void ParseConfigFile(FString fPath);
+	void ParseConfigFile(FString fPath, int &parsedNumRooms, float &parsedMinScale, float &parsedMaxScale);
 		
 };
