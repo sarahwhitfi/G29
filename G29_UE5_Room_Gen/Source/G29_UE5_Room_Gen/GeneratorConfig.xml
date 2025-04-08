@@ -4,7 +4,7 @@
 	<Seed>0</Seed>
 	<NumRooms>10</NumRooms>
 	<MinScale>1.0</MinScale>
-	<MaxScale>1.0</MaxScale>
+	<MaxScale>3.0</MaxScale>
 	<MinNumPictures>3</MinNumPictures>
 	<MaxNumPictures>10</MaxNumPictures>
 </config>
